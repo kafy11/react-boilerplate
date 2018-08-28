@@ -8,6 +8,28 @@ import styled from 'styled-components';
 //cria o media query
 const mql = window.matchMedia(`(min-width: 800px)`);
 
+//componente estilizado para o título
+const Title = styled.b`
+    margin-left: ${theme.spacing.small}px;
+`;
+
+//componente estilizado para organizar o header e content da página
+const ContentContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`;
+
+//componente estilizado para o conteúdo da página
+const PageContainer = styled.div`
+    height: 100%;
+    width: 100%;
+    padding: ${theme.spacing.small}px;
+    background-color: ${theme.palette.light};
+    box-sizing: border-box;
+`;
+
 export default class PageWithSidebar extends Component{
     constructor(props) {
         super(props);
@@ -96,11 +118,6 @@ export default class PageWithSidebar extends Component{
             font-family: ${theme.font};
         `;
 
-        //cria um componente estilizado para o título
-        const Title = styled.b`
-            margin-left: ${theme.spacing.small}px;
-        `;
-
         return (
             <Sidebar
                 sidebar={this.renderSidebarContent()}
@@ -109,12 +126,16 @@ export default class PageWithSidebar extends Component{
                 onSetOpen={this.onSetSidebarOpen}
                 styles={{ sidebar: { zIndex: 999 } }}
             >
-                <Header>
-                    {this.renderButton()} 
-                    <Title>{title}</Title>
-                </Header>
+                <ContentContainer>
+                    <Header>
+                        {this.renderButton()} 
+                        <Title>{title}</Title>
+                    </Header>
 
-                {children}
+                    <PageContainer>
+                        {children}
+                    </PageContainer>
+                </ContentContainer>
             </Sidebar>
         );
     }

@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import PageWithSidebar from '../../templates/PageWithSidebar';
 import theme from '../../themes';
+import styled from 'styled-components';
 import Sidebar from './Sidebar';
+
+const QueryInput = styled.textarea`
+    height: 60%;
+    width: 100%;
+`;
 
 export default class MiniToad extends Component{
     render() {
@@ -14,7 +20,7 @@ export default class MiniToad extends Component{
                 headerColor={theme.palette.primary}
                 headerTextColor={theme.palette.white}
             >
-
+                <QueryInput />
             </PageWithSidebar>
         );
     }
