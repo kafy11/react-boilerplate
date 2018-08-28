@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import Sidebar from './Sidebar';
 
 const QueryInput = styled.textarea`
-    height: 60%;
-    width: 100%;
+    flex: 1
 `;
 
 export default class MiniToad extends Component{

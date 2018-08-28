@@ -25,9 +25,9 @@ const ContentContainer = styled.div`
 const PageContainer = styled.div`
     height: 100%;
     width: 100%;
-    padding: ${theme.spacing.small}px;
     background-color: ${theme.palette.light};
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
 `;
 
 export default class PageWithSidebar extends Component{
