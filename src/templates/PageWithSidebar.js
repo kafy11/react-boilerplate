@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
-import LaddaButton, { XS } from 'react-ladda';
+import { Button } from 'reactstrap';
 import { FaBars } from 'react-icons/fa';
 import theme from '../themes';
 import styled from 'styled-components';
@@ -45,14 +45,12 @@ export default class PageWithSidebar extends Component{
     renderButton() {
         if(!this.state.bigScreen) {
             return (
-                <LaddaButton 
-                    loading={false} 
-                    onClick = {() => this.onSetSidebarOpen(true)} 
-                    data-color={theme.palette.light}
-                    data-size={XS}
+                <Button 
+                    color="primary"
+                    onClick = {() => this.onSetSidebarOpen(true)}
                 >
                     <FaBars />
-                </LaddaButton>
+                </Button>
             );
         }
     }

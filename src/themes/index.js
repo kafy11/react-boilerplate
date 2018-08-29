@@ -5,14 +5,11 @@ theme.palette = {
     white: "#FFF",
     black: "#000",
     light: "#ecf0f1",
-    success: "#2ecc71",
-    darkSuccess: "#27ae60",
-    danger: "#e74c3c",
-    darkDanger: "#c0392b",
-    primary: "#3498db",
-    darkPrimary: "#2980b9",
-    secondary: "#f1c40f",
-    darkSecondary: "#f39c12",
+    success: "#28a745",
+    danger: "#dc3545",
+    primary: "#007bff",
+    secondary: "#6c757d",
+    warning: "#ffc107",
     grayscale: ["#bdc3c7","#7f8c8d","#95a5a6"]
 };
 

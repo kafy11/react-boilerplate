@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
 import theme from '../../themes';
-import Select from '../../components/Select';
+import { Select } from '../../components';
 
 const OBJECT_OPTIONS = [
     { value: 'TABLE', label: 'Tabelas' },
@@ -33,6 +33,7 @@ export default class Sidebar extends Component{
             flex: 1;
             list-style: none;
             padding: 0;
+            margin-top: ${theme.spacing.small}px;
         `;
 
         const ObjectItem = styled.li`
@@ -51,7 +52,7 @@ export default class Sidebar extends Component{
                 
                 <ObjectList>
                     <Scrollbars>
-                        {this.state.objects.map((object) => <ObjectItem>{object.name}</ObjectItem>)}
+                        {this.state.objects.map((object) => <ObjectItem key={object.name}>{object.name}</ObjectItem>)}
                     </Scrollbars>
                 </ObjectList>
                 
