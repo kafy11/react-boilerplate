@@ -4,31 +4,10 @@ import LaddaButton, { XS } from 'react-ladda';
 import { FaBars } from 'react-icons/fa';
 import theme from '../themes';
 import styled from 'styled-components';
+import Page from './Page';
 
 //cria o media query
 const mql = window.matchMedia(`(min-width: 800px)`);
-
-//componente estilizado para o título
-const Title = styled.b`
-    margin-left: ${theme.spacing.small}px;
-`;
-
-//componente estilizado para organizar o header e content da página
-const ContentContainer = styled.div`
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-`;
-
-//componente estilizado para o conteúdo da página
-const PageContainer = styled.div`
-    height: 100%;
-    width: 100%;
-    background-color: ${theme.palette.light};
-    display: flex;
-    flex-direction: column;
-`;
 
 export default class PageWithSidebar extends Component{
     constructor(props) {
@@ -102,22 +81,6 @@ export default class PageWithSidebar extends Component{
     }
 
     render() {
-        const { children, title, headerColor, headerTextColor } = this.props; 
-
-        //cria um componente estilizado para o header
-        const Header = styled.div`
-            background-color: ${headerColor};
-            color: ${headerTextColor};
-            padding: ${theme.spacing.small}px;
-            width: 100%;
-            display: flex;
-            flex-direction: row;
-            height: 32px;
-            justify-content: flex-start;
-            align-items: center;
-            font-family: ${theme.font};
-        `;
-
         return (
             <Sidebar
                 sidebar={this.renderSidebarContent()}
@@ -126,16 +89,7 @@ export default class PageWithSidebar extends Component{
                 onSetOpen={this.onSetSidebarOpen}
                 styles={{ sidebar: { zIndex: 999 } }}
             >
-                <ContentContainer>
-                    <Header>
-                        {this.renderButton()} 
-                        <Title>{title}</Title>
-                    </Header>
-
-                    <PageContainer>
-                        {children}
-                    </PageContainer>
-                </ContentContainer>
+                <Page {...this.props} leftContentHeader={this.renderButton()} />
             </Sidebar>
         );
     }
