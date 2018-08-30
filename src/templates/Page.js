@@ -14,36 +14,36 @@ const ContentContainer = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
+    font-size: ${theme.sizes.regular};
+    font-family: ${theme.font};
 `;
 
 //componente estilizado para o conteúdo da página
 const PageContainer = styled.div`
-    height: 100%;
+    flex: 1;
     width: 100%;
     background-color: ${theme.palette.light};
     display: flex;
     flex-direction: column;
 `;
 
-const PullRightContainer = styled.div`
-    align-self: flex-end;
+//cria um componente estilizado para o header
+const Header = styled.div`
+    align-items: center;
+    background-color: ${theme.palette.primary};
+    box-sizing: border-box;
+    color: ${theme.palette.white};
+    display: flex;
+    flex-direction: row;
+    min-height: 48px;
+    max-height: 48px;
+    justify-content: flex-start;
+    padding: ${theme.spacing.small}px;
+    width: 100%;
 `;
 
-export default ({ children, title, headerColor, headerTextColor, leftContentHeader, rightContentHeader }) => {
-    //cria um componente estilizado para o header
-    const Header = styled.div`
-        align-items: center;
-        background-color: ${headerColor};
-        box-sizing: border-box;
-        color: ${headerTextColor};
-        display: flex;
-        flex-direction: row;
-        font-family: ${theme.font};
-        height: 48px;
-        justify-content: flex-start;
-        padding: ${theme.spacing.small}px;
-        width: 100%;
-    `;
+export default ({ children, title, leftContentHeader, rightContentHeader }) => {
+    
 
     return (
         <ContentContainer>

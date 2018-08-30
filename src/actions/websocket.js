@@ -8,7 +8,8 @@ export const startConnectCompany = () => {
         const conn = getState().websocket.conn;
 
         conn.send({
-            action: 'getname'
+            action: 'getname',
+            frontAction: 'connectCompany'
         });
     }
 };

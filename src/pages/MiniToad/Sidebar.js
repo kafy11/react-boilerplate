@@ -1,62 +1,78 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
-import theme from '../../themes';
+import Spinner from 'react-spinkit';
 import { Select } from '../../components';
+import ObjectItem from './ObjectItem';
+import theme from '../../themes';
 
 const OBJECT_OPTIONS = [
     { value: 'TABLE', label: 'Tabelas' },
     { value: 'VIEW', label: 'Views' },
     { value: 'PROCEDURE', label: 'Procedures' },
     { value: 'FUNCTION', label: 'Funções' },
-    { value: 'JOB', label: 'Jobs' }
+    { value: 'TRIGGER', label: 'Triggers' },
+    { value: 'PROCOBJ', label: 'Jobs' }
 ]; 
 
-export default class Sidebar extends Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-            objects: [{
-                name: 'Teste'
-            },]
-        };
+const SidebarContainer = styled.div`
+    display:flex;
+    flex-direction: column;
+    height: 100%;
+`;
+
+const ObjectList = styled.ul`
+    flex: 1;
+    list-style: none;
+    padding: 0;
+    margin-top: ${theme.spacing.small}px;
+`;
+
+const SpinnerContainer = SidebarContainer.extend` 
+    justify-content: center;
+    align-items: center;
+`;
+
+export default ({ objects, onOpenObject, onChangeType, selectedType, running }) => {
+    const renderList = () => {
+        if(objects) {
+            return objects.map((object) => (
+                <ObjectItem 
+                    key={object.OBJECT_NAME}
+                    data={object} 
+                    onClick={onOpenObject}
+                />
+            ));
+        }
     }
 
-    render() {
-        const SidebarContainer = styled.div`
-            display:flex;
-            flex-direction: column;
-            height: 100%;
-        `;
-
-        const ObjectList = styled.ul`
-            flex: 1;
-            list-style: none;
-            padding: 0;
-            margin-top: ${theme.spacing.small}px;
-        `;
-
-        const ObjectItem = styled.li`
-            background-color: ${theme.palette.white};
-            color: ${theme.palette.black};
-            padding: ${theme.spacing.small}px;
-            border: 1px solid ${theme.palette.grayscale[0]};
-        `;
-
+    if(running) {
         return (
-            <SidebarContainer>
-                <Select 
-                    placeholder="Tipo de objeto"
-                    options={OBJECT_OPTIONS}
+            <SpinnerContainer>
+                <Spinner 
+                    name="ball-spin-fade-loader" 
+                    color={theme.palette.white} 
+                    fadeIn="none"
                 />
-                
-                <ObjectList>
-                    <Scrollbars>
-                        {this.state.objects.map((object) => <ObjectItem key={object.name}>{object.name}</ObjectItem>)}
-                    </Scrollbars>
-                </ObjectList>
-                
-            </SidebarContainer>
+            </SpinnerContainer>
         );
     }
+
+    return (
+        <SidebarContainer>
+            <Select 
+                placeholder="Tipo de objeto"
+                value={selectedType}
+                options={OBJECT_OPTIONS}
+                onChange={onChangeType}
+            />
+            
+            <ObjectList>
+                <Scrollbars>
+                    {renderList()}
+                </Scrollbars>
+            </ObjectList>
+            
+        </SidebarContainer>
+    );
 }

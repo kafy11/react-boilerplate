@@ -33,7 +33,11 @@ const App = ({ company, error }) => {
 
     return (
         <Background>
-            <Spinner name="ball-scale-ripple-multiple" color={theme.palette.white} />
+            <Spinner 
+                name="ball-scale-ripple-multiple" 
+                color={theme.palette.white} 
+                fadeIn="none"
+            />
 
             <Text>Tentando conectar com a empresa</Text>
         </Background>

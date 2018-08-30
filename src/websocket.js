@@ -1,5 +1,5 @@
 import { connectServer, startConnectCompany, connectCompany, setError } from './actions/websocket';
-import { setData } from './actions/query';
+import { setData, setDataObj, setDataGetDDL } from './actions/query';
 
 const getParameterByName = (name, url) => {
     if (!url) url = window.location.href;
@@ -25,14 +25,22 @@ export default async (store) => {
             const data = JSON.parse(e.data);
 
             if(data.toAction) {
-                switch(data.toAction) {
-                    case 'getname':
+                switch(data.frontAction) {
+                    case 'connectCompany':
                         store.dispatch(connectCompany(data.response));
                         break;
                     
                     case 'select':
-                    case 'runquery':
+                    case 'query':
                         store.dispatch(setData(data.response));
+                        break;
+
+                    case 'listObjects':
+                        store.dispatch(setDataObj(data.response));
+                        break;
+
+                    case 'getDDL':
+                        store.dispatch(setDataGetDDL(data.response[0]['DDL']));
                         break;
                 }
             } else if(data.status == -1) {

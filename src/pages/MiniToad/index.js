@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PageWithSidebar from '../../templates/PageWithSidebar';
 import theme from '../../themes';
-import { startQuery, startSelect } from '../../actions/query';
+import { startQuery, startSelect, startListObjects, startGetDDL } from '../../actions/query';
 import { Tabs } from '../../components';
 import Sidebar from './Sidebar';
 import QueryTab from './QueryTab';
@@ -12,8 +12,18 @@ class MiniToad extends Component{
     constructor(props){
         super(props);
         this.state = {
-            activeTab: 0
+            activeTab: 0,
+            selectedType: null,
+            sidebarOpened: false
         };
+    }
+
+    componentDidUpdate(prevProps,prevState){
+        if(prevProps.ddl != this.props.ddl) {
+            this.setState({
+                activeTab: 0
+            });
+        }
     }
 
     handleExecute = (query) => {
@@ -25,9 +35,7 @@ class MiniToad extends Component{
             startQuery(query);
         }
         
-        this.setState(() => ({
-            activeTab: 1
-        }));
+        this.handleChangeTab(1);
     }
 
     handleChangeTab = (tab) => {
@@ -36,13 +44,44 @@ class MiniToad extends Component{
         }));
     }
 
+    handleSidebarToggle = (opened) => {
+        this.setState(() => ({
+            sidebarOpened: opened
+        }));
+    }
+
+    handleChangeType = (type) => {
+        this.props.startListObjects(type.value);
+        this.setState(() => ({ selectedType: type }));
+    }
+
+    handleOpenObject = (object) => {
+        this.props.startGetDDL(this.state.selectedType.value,object.OBJECT_NAME);
+        this.setState(() => ({ sidebarOpened: false }));
+    }
+
+    renderSidebar = () => {
+        const { objects, runningListObj } = this.props;
+        return (
+            <Sidebar 
+                objects={objects} 
+                selectedType={this.state.selectedType}
+                running={runningListObj} 
+                onChangeType={this.handleChangeType} 
+                onOpenObject={this.handleOpenObject}
+            />
+        );
+    }
+
     render() {
-        const { data, running } = this.props;
+        const { data, running, runningGetDDL, ddl } = this.props;
 
         const tabs = [{
             content: <QueryTab 
                         onExecute={this.handleExecute}
                         running={running}
+                        loadingQuery={runningGetDDL} 
+                        query={ddl}
                     />,
             navContent: "Executar"
         },{
@@ -51,16 +90,17 @@ class MiniToad extends Component{
                         running={running} 
                     />,
             navContent: "Resultado"
+        },{
+            content: 'teste',
+            navContent: 'Titulo'
         }];
 
         return (
             <PageWithSidebar 
-                sidebarContent={<Sidebar />}
+                sidebarContent={this.renderSidebar()}
                 title="Mini Toad" 
-                barColor={theme.palette.primary}
-                barTextColor={theme.palette.white}
-                headerColor={theme.palette.primary}
-                headerTextColor={theme.palette.white}
+                sidebarOpened={this.state.sidebarOpened}
+                onSidebarToggle={this.handleSidebarToggle}
             >
                 <Tabs 
                     tabs={tabs} 
@@ -74,12 +114,18 @@ class MiniToad extends Component{
 
 const mapDispatchToProps = {
     startQuery,
-    startSelect
+    startSelect,
+    startListObjects,
+    startGetDDL
 };
 
-const mapStateToProps = (state, props) => ({
+const mapStateToProps = (state) => ({
     data: state.query.data,
-    running: state.query.running
+    running: state.query.running,
+    objects: state.query.data_obj,
+    runningListObj: state.query.running_obj,
+    ddl: state.query.data_ddl,
+    runningGetDDL: state.query.running_ddl,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MiniToad);

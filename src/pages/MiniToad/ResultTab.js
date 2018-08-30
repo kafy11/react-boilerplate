@@ -13,6 +13,11 @@ const PageContainer = styled.div`
     padding: ${({ theme }) => theme.spacing.small}px;
 `;
 
+const SpinnerContainer = PageContainer.extend` 
+    justify-content: center;
+    align-items: center;
+`;
+
 const renderContent = (content) => (
     <PageContainer>
         {content}
@@ -21,15 +26,27 @@ const renderContent = (content) => (
 
 export default ({ data, running }) => {
     if(running) {
-        return renderContent(<Spinner name="ball-spin-fade-loader" color={theme.palette.primary} />);
+        return (
+            <SpinnerContainer>
+                <Spinner 
+                    name="ball-spin-fade-loader" 
+                    color={theme.palette.primary} 
+                    fadeIn="none"
+                />
+            </SpinnerContainer>
+        );
     }
 
     if(!data) {
         return renderContent('Nenhum resultado!');
     }
 
-    if(!data || typeof(data) == 'string') {
+    if(typeof(data) == 'string') {
         return renderContent(data);
+    }
+
+    if(data === true){
+        return renderContent("Query executada");
     }
 
     return renderContent(<Table data={data} />);

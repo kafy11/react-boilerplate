@@ -6,6 +6,23 @@ import theme from '../themes';
 import styled from 'styled-components';
 import Page from './Page';
 
+//cria um componente estilizado para o container da barra lateral
+const SidebarContainer = styled.div`
+    height: 100%;
+    box-sizing: border-box;
+    padding: ${theme.spacing.small}px;
+    min-width: 250px;
+    max-width: 250px;
+    font-family: ${theme.font};
+    font-size: ${theme.sizes.regular};
+    background-color: ${theme.palette.primary};
+    color: ${theme.palette.white};
+`;
+
+const ColorProvider = styled.div`
+    color: ${theme.palette.white};
+`;
+
 //cria o media query
 const mql = window.matchMedia(`(min-width: 800px)`);
 
@@ -16,6 +33,12 @@ export default class PageWithSidebar extends Component{
             bigScreen: mql.matches,
             sidebarOpen: false
         };
+    }
+
+    componentDidUpdate(prevProps){
+        if(!this.state.bigScreen && prevProps.sidebarOpened != this.props.sidebarOpened) {
+            this.setState({ sidebarOpen: this.props.sidebarOpened });
+        }
     }
 
     //quando componente inicia, seta o listener do media query
@@ -32,6 +55,12 @@ export default class PageWithSidebar extends Component{
     //params:
     //open - boolean - (true: abre barra lateral, false: fecha barra lateral)
     onSetSidebarOpen = (open) => {
+        const { onSidebarToggle } = this.props;
+
+        if(onSidebarToggle){
+            onSidebarToggle(open);
+        }
+
         this.setState(() => ({ sidebarOpen: open }));
     }
 
@@ -46,39 +75,24 @@ export default class PageWithSidebar extends Component{
         if(!this.state.bigScreen) {
             return (
                 <Button 
-                    color="primary"
+                    color="link"
                     onClick = {() => this.onSetSidebarOpen(true)}
                 >
-                    <FaBars />
+                    <ColorProvider><FaBars /></ColorProvider>
                 </Button>
             );
         }
     }
 
     //renderiza o conteúdo da barra lateral
-    renderSidebarContent() {
-        const { sidebarContent, barColor, barTextColor } = this.props;
-
-        //cria um componente estilizado para o container da barra lateral
-        const SidebarContainer = styled.div`
-            height: 100%;
-            box-sizing: border-box;
-            background-color: ${barColor};
-            color: ${barTextColor};
-            padding: ${theme.spacing.small}px;
-            width: 250px;
-            max-width: 250px;
-            font-family: ${theme.font};
-        `;
-
-        return (
-            <SidebarContainer>
-                {sidebarContent}
-            </SidebarContainer>
-        );
-    }
+    renderSidebarContent = () => (
+        <SidebarContainer>
+            {this.props.sidebarContent}
+        </SidebarContainer>
+    )
 
     render() {
+        
         return (
             <Sidebar
                 sidebar={this.renderSidebarContent()}

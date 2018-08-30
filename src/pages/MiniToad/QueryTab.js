@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import LaddaButton, { S, CONTRACT } from 'react-ladda';
+import Spinner from 'react-spinkit';
 import theme from '../../themes';
 
 const PageContainer = styled.div`
@@ -9,6 +10,11 @@ const PageContainer = styled.div`
     background-color: ${theme.palette.light};
     display: flex;
     flex-direction: column;
+`;
+
+const SpinnerContainer = PageContainer.extend` 
+    justify-content: center;
+    align-items: center;
 `;
 
 const QueryInput = styled.textarea`
@@ -34,6 +40,14 @@ export default class QueryTab extends Component{
         };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if(prevProps.query != this.props.query){
+            this.setState({
+                query: this.props.query
+            });
+        }
+    }
+
     handleQueryChange = (e) => {
         const query = e.target.value;
         this.setState(() => ({ query }));
@@ -44,6 +58,20 @@ export default class QueryTab extends Component{
     }
 
     render() {
+        const { loadingQuery, running } = this.props;
+
+        if(loadingQuery){
+            return (
+                <SpinnerContainer>
+                    <Spinner 
+                        name="ball-spin-fade-loader" 
+                        color={theme.palette.primary} 
+                        fadeIn="none"
+                    />
+                </SpinnerContainer>
+            );
+        }
+
         return (
             <PageContainer>
                 <QueryInput 
@@ -52,7 +80,7 @@ export default class QueryTab extends Component{
                 />
                 <ButtonsContainer>
                     <LaddaButton
-                        loading={this.props.running}
+                        loading={running}
                         onClick={this.handleExecute}
                         data-color="blue"
                         data-size={S}
