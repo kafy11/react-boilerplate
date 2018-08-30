@@ -90,9 +90,6 @@ class MiniToad extends Component{
                         running={running} 
                     />,
             navContent: "Resultado"
-        },{
-            content: 'teste',
-            navContent: 'Titulo'
         }];
 
         return (
