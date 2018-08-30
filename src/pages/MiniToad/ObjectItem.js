@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from '../../themes';
 
+//container do item do objeto
 const ObjectItem = styled.li`
     background-color: ${theme.palette.white};
     color: ${theme.palette.black};
@@ -11,6 +12,10 @@ const ObjectItem = styled.li`
     cursor: pointer;
 `;
 
+/* props:
+    data - dados do objeto
+    onClick - callback do clique no objeto
+*/
 export default ({ data, onClick }) => (
     <ObjectItem 
         title={data.OBJECT_NAME}

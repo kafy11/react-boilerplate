@@ -24,4 +24,5 @@ const jsx = (
 //renderiza o jsx no html
 ReactDOM.render(jsx, document.getElementById('app'));
 
+//inicializa o websocket
 connectWebsocket(store);

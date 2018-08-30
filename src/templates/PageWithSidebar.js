@@ -19,6 +19,7 @@ const SidebarContainer = styled.div`
     color: ${theme.palette.white};
 `;
 
+//cria um componente que define a cor do texto (usado para o icone)
 const ColorProvider = styled.div`
     color: ${theme.palette.white};
 `;
@@ -29,12 +30,18 @@ const mql = window.matchMedia(`(min-width: 800px)`);
 export default class PageWithSidebar extends Component{
     constructor(props) {
         super(props);
+
+        /* cria o estado inicial do componente
+            bigScreen - se é tela grande ou não 
+            sidebarOpen - se barra lateral está aberta ou não
+        */
         this.state = {
             bigScreen: mql.matches,
             sidebarOpen: false
         };
     }
 
+    //verifica se o componente pai mandou abrir/fechar a barra lateral
     componentDidUpdate(prevProps){
         if(!this.state.bigScreen && prevProps.sidebarOpened != this.props.sidebarOpened) {
             this.setState({ sidebarOpen: this.props.sidebarOpened });
@@ -92,7 +99,6 @@ export default class PageWithSidebar extends Component{
     )
 
     render() {
-        
         return (
             <Sidebar
                 sidebar={this.renderSidebarContent()}

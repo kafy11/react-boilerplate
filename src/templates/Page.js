@@ -42,9 +42,13 @@ const Header = styled.div`
     width: 100%;
 `;
 
+/* props:
+    children - conteúdo da página
+    title - título da página
+    leftContentHeader - conteúdo para colocar a esquerda do titulo
+    rightContentHeader - conteúdo para colocar a direita do título
+*/
 export default ({ children, title, leftContentHeader, rightContentHeader }) => {
-    
-
     return (
         <ContentContainer>
             <Header>

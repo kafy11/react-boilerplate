@@ -4,6 +4,7 @@ import LaddaButton, { S, CONTRACT } from 'react-ladda';
 import Spinner from 'react-spinkit';
 import theme from '../../themes';
 
+//container da página
 const PageContainer = styled.div`
     height: 100%;
     width: 100%;
@@ -12,17 +13,20 @@ const PageContainer = styled.div`
     flex-direction: column;
 `;
 
+//container que centraliza o spinner
 const SpinnerContainer = PageContainer.extend` 
     justify-content: center;
     align-items: center;
 `;
 
+//textarea
 const QueryInput = styled.textarea`
     flex: 1;
     margin: ${theme.spacing.medium}px;
     resize: none;
 `;
 
+//container do botão no fim da página
 const ButtonsContainer = styled.div`
     width: 100%;
     display: flex;
@@ -32,14 +36,23 @@ const ButtonsContainer = styled.div`
     padding-top: 0px;
 `;
 
+/* props: 
+    onExecute - callback para o evento de click do botão executar(params: query do textarea)
+    loadingQuery - mostra o loading da página
+    running - mostra o loading do botão executar
+*/
 export default class QueryTab extends Component{
     constructor(props){
         super(props);
+        /* cria o estado inicial 
+            query - conteúdo do textarea
+        */
         this.state = {
             query: ''
         };
     }
 
+    //verifica se recebeu uma query do componente pai
     componentDidUpdate(prevProps, prevState) {
         if(prevProps.query != this.props.query){
             this.setState({
@@ -48,11 +61,13 @@ export default class QueryTab extends Component{
         }
     }
 
+    //handle que pega o conteúdo do textarea
     handleQueryChange = (e) => {
         const query = e.target.value;
         this.setState(() => ({ query }));
     }
 
+    //handle que pega o click do botão executar e dispara o evento onExecute
     handleExecute = () => {
         this.props.onExecute(this.state.query);
     }
@@ -60,6 +75,7 @@ export default class QueryTab extends Component{
     render() {
         const { loadingQuery, running } = this.props;
 
+        //exibe o loading da página
         if(loadingQuery){
             return (
                 <SpinnerContainer>

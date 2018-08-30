@@ -6,6 +6,7 @@ import theme from '../../themes';
 import Error from './Error';
 import MiniToad from '../MiniToad';
 
+//fundo azul da página
 const Background = styled.div`
     background-color: ${theme.palette.primary};
     height: 100vh;
@@ -17,6 +18,7 @@ const Background = styled.div`
     color: ${theme.palette.white};
 `;
 
+//texto estilizado
 const Text = styled.span`
     color: ${theme.palette.white};
     font-family: ${theme.font};
@@ -24,7 +26,13 @@ const Text = styled.span`
     margin-top: ${theme.spacing.large}px;
 `;
 
+/* props:
+    company - nome da empresa (para validar se conseguiu pegar já)
+    error - mensagem de erro
+*/
 const App = ({ company, error }) => {
+    // se deu erro, exibe
+    //se conseguiu pegar a empresa, vai para o minitoad
     if(error) {
         return <Error msg={error} />;
     } else if(company) {
@@ -44,9 +52,11 @@ const App = ({ company, error }) => {
     );
 }
 
+//passa o state global para os props
 const mapStateToProps = (state, props) => ({
     company: state.websocket.name,
     error: state.websocket.error
 });
 
+//exporta o component com redux
 export default connect(mapStateToProps)(App);

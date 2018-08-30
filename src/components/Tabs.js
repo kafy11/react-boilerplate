@@ -3,6 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
 import styled from 'styled-components';
 
+//container para as abas
 const Container = styled.div`
     width: 100%;
     height: 100%;
@@ -10,18 +11,28 @@ const Container = styled.div`
     flex-direction: column;
 `;
 
-export default class Example extends React.Component {
+/* props:
+    tabs - array na estrutura [][content -> conteúdo da página da aba, navContent -> conteúdo do titulo]
+    activeTab - aba ativa
+*/
+export default class Tabs extends React.Component {
     constructor(props) {
         super(props);
+
+        /*define o estado inicial
+            activeTab - aba ativa
+        */
         this.state = {
             activeTab: (props.activeTab !== undefined) ? props.activeTab : 0
         };
     }
 
+    //pega a aba ativa
     getActiveTab = () => {
         return (this.props.activeTab !== undefined) ? this.props.activeTab : this.state.activeTab;
     }
 
+    //handle do clique da aba
     toggle = (tab) => {
         const { onChangeTab } = this.props;
 
@@ -36,12 +47,14 @@ export default class Example extends React.Component {
         }
     }
 
+    //renderiza o conteúdo das abas
     renderTabContent(){
         return this.props.tabs.map((tab,i) => (
             <TabPane className="h-100" tabId={i} key={i}>{tab.content}</TabPane>
         ));
     }
 
+    //renderiza o conteúdo do titulo das abas
     renderTabNav(){
         const activeTab = this.getActiveTab();
 

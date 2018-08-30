@@ -6,6 +6,7 @@ import { Select } from '../../components';
 import ObjectItem from './ObjectItem';
 import theme from '../../themes';
 
+//array de tipos de objetos do select
 const OBJECT_OPTIONS = [
     { value: 'TABLE', label: 'Tabelas' },
     { value: 'VIEW', label: 'Views' },
@@ -15,12 +16,14 @@ const OBJECT_OPTIONS = [
     { value: 'PROCOBJ', label: 'Jobs' }
 ]; 
 
+//container que engloba o conteúdo da barra lateral
 const SidebarContainer = styled.div`
     display:flex;
     flex-direction: column;
     height: 100%;
 `;
 
+//lista de objetos
 const ObjectList = styled.ul`
     flex: 1;
     list-style: none;
@@ -28,12 +31,21 @@ const ObjectList = styled.ul`
     margin-top: ${theme.spacing.small}px;
 `;
 
+//container que centraliza o spinner
 const SpinnerContainer = SidebarContainer.extend` 
     justify-content: center;
     align-items: center;
 `;
 
+/* props:
+    objects - array de objetos para a lista 
+    onOpenObject - callback disparado no clique do objeto (params: dados do objeto)
+    onChangeType - callback disparado ao selecionar um tipo de objeto (params: dados do tipo)
+    selectedType - tipo de objeto selecionado
+    running - mostra o loading
+*/
 export default ({ objects, onOpenObject, onChangeType, selectedType, running }) => {
+    //renderiza a lista de objetos
     const renderList = () => {
         if(objects) {
             return objects.map((object) => (
@@ -46,6 +58,7 @@ export default ({ objects, onOpenObject, onChangeType, selectedType, running }) 
         }
     }
 
+    //mostra o spinner
     if(running) {
         return (
             <SpinnerContainer>
