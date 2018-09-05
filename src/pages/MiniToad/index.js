@@ -97,7 +97,7 @@ class MiniToad extends Component{
     }
 
     render() {
-        const { data, running, runningGetDDL, ddl } = this.props;
+        const { data, running, runningGetDDL, ddl, company } = this.props;
 
         //cria o array das abas
         const tabs = [{
@@ -122,6 +122,7 @@ class MiniToad extends Component{
                 title="Mini Toad" 
                 sidebarOpened={this.state.sidebarOpened}
                 onSidebarToggle={this.handleSidebarToggle}
+                company={company}
             >
                 <Tabs 
                     tabs={tabs} 
@@ -143,6 +144,7 @@ const mapDispatchToProps = {
 
 //passa o state do redux para props
 const mapStateToProps = (state) => ({
+    company: state.websocket.name,
     data: state.query.data,
     running: state.query.running,
     objects: state.query.data_obj,

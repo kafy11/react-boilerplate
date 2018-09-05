@@ -45,8 +45,8 @@ export default ({ data, running }) => {
         );
     }
 
-    //se o dado estiverem vazio
-    if(!data) {
+    //se os dados estiverem vazio
+    if(!data || data.length == 0) {
         return renderContent('Nenhum resultado!');
     }
 

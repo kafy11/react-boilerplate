@@ -36,6 +36,7 @@ const App = ({ company, error }) => {
     if(error) {
         return <Error msg={error} />;
     } else if(company) {
+        document.title = company + ' - ' + document.title;
         return <MiniToad />
     }
 

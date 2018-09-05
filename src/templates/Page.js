@@ -1,11 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import theme from '../themes';
 import styled from 'styled-components';
 
 //componente estilizado para o título
 const Title = styled.b`
-    margin-left: ${theme.spacing.small}px;
+    margin: 0 ${theme.spacing.small}px;
     flex: 1;
+`;
+
+const Company = styled.b`
+    margin: 0 ${theme.spacing.small}px;
+    color: ${theme.palette.warning};
+    font-size: ${theme.sizes.big};
 `;
 
 //componente estilizado para organizar o header e content da página
@@ -48,12 +54,13 @@ const Header = styled.div`
     leftContentHeader - conteúdo para colocar a esquerda do titulo
     rightContentHeader - conteúdo para colocar a direita do título
 */
-export default ({ children, title, leftContentHeader, rightContentHeader }) => {
+export default ({ children, title, leftContentHeader, rightContentHeader, company }) => {
     return (
         <ContentContainer>
             <Header>
                 {leftContentHeader} 
                 <Title>{title}</Title>
+                <Company>{company}</Company>
                 {rightContentHeader}
             </Header>
 

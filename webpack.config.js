@@ -23,19 +23,13 @@ module.exports = (env) => {
             rules: [{
                 loader: 'babel-loader',
                 test: /\.js$/,
-                exclude: /node_modules/
+                exclude: /node_modules\/(?!react-icons)/,
             }, {
                 test: /\.s?css$/,
                 use: CSSExctract.extract({
                     use: [
                         {
                             loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        },
-                        {
-                            loader: 'sass-loader',
                             options: {
                                 sourceMap: true
                             }

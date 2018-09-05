@@ -17,7 +17,8 @@ theme.palette = {
 theme.sizes = {
     xsmall: '10px',
     small: '12px',
-    regular: '14px'
+    regular: '14px',
+    big: '18px'
 };
 
 //tamanhos de padding/margin
