@@ -119,7 +119,6 @@ class MiniToad extends Component{
         return (
             <PageWithSidebar 
                 sidebarContent={this.renderSidebar()}
-                title="Mini Toad" 
                 sidebarOpened={this.state.sidebarOpened}
                 onSidebarToggle={this.handleSidebarToggle}
                 company={company}
