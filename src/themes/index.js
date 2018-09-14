@@ -23,6 +23,7 @@ theme.sizes = {
 
 //tamanhos de padding/margin
 theme.spacing = {
+    xsmall: 4,
     small: 8,
     medium: 16,
     large: 32,

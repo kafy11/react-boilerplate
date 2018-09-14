@@ -22,9 +22,9 @@ export default async (store) => {
     
     if(to) 
     {
-        //cria o objeto da conexão websocket
-        const conn = await new WebSocket('ws://54.235.35.176:8080?id=0');
-        
+        //cria o objeto da conexão websocketd
+        const conn = await new WebSocket('ws://gate.gthealth.com.br:8080?id=0');
+
         //quando a conexão é aberta, tenta conectar na empresa
         conn.onopen = function(e) {
             store.dispatch(startConnectCompany());

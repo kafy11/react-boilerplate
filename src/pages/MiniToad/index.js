@@ -46,7 +46,7 @@ class MiniToad extends Component{
     handleExecute = (query) => {
         const { startQuery, startSelect } = this.props;
 
-        if(query.toUpperCase().startsWith('SELECT')){
+        if(query.toUpperCase().trim().startsWith('SELECT')){
             startSelect(query);
         } else {
             startQuery(query);
