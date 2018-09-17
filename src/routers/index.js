@@ -6,7 +6,9 @@ import MiniToad from '../pages/MiniToad';
 import Splash from '../pages/Splash';
 import Error from '../pages/Error';
 
-export const history = createHistory();
+export const history = createHistory({
+    basename: BASENAME
+});
 
 const AppRouter = () => (
     <Router history={history}>
