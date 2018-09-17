@@ -21,11 +21,12 @@ export const setRunningGetDDL = () => ({
 */
 export const startSelect = (query) => {
     return (dispatch, getState) => {
-        const conn = getState().websocket.conn;
+        const { conn, id } = getState().websocket;
 
         conn.send({
             action: 'select',
             frontAction: 'select',
+            to: id,
             query
         });
         
@@ -39,11 +40,12 @@ export const startSelect = (query) => {
 */
 export const startQuery = (query) => {
     return (dispatch, getState) => {
-        const conn = getState().websocket.conn;
+        const { conn, id } = getState().websocket;
 
         conn.send({
             action: 'runquery',
             frontAction: 'query',
+            to: id,
             query
         });
 
@@ -57,7 +59,7 @@ export const startQuery = (query) => {
 */
 export const startListObjects = (type) => {
     return (dispatch, getState) => {
-        const conn = getState().websocket.conn;
+        const { conn, id } = getState().websocket;
 
         //o select para jobs é diferente
         const query = (type != 'PROCOBJ') ? `SELECT OBJECT_NAME FROM user_objects WHERE object_type = '${type}' ORDER BY OBJECT_NAME` 
@@ -66,6 +68,7 @@ export const startListObjects = (type) => {
         conn.send({
             action: 'select',
             frontAction: 'listObjects',
+            to: id,
             query
         });
 
@@ -80,12 +83,13 @@ export const startListObjects = (type) => {
 */
 export const startGetDDL = (type, object) => {
     return (dispatch, getState) => {
-        const conn = getState().websocket.conn;
+        const { conn, id } = getState().websocket;
         const query = `SELECT DBMS_METADATA.GET_DDL('${type}','${object}') as DDL FROM DUAL`;
 
         conn.send({
             action: 'select',
             frontAction: 'getDDL',
+            to: id,
             query
         });
 

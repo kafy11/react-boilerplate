@@ -7,9 +7,16 @@ export default (state = {}, action) => {
                 conn: action.conn
             };
 
+        case 'SET_COMPANIES_LIST':
+            return {
+                ...state,
+                companies: action.companies
+            };
+
         case 'CONNECT_COMPANY':
             return {
                 ...state,
+                id: action.id,
                 name: action.name
             };
 
