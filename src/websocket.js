@@ -1,5 +1,6 @@
-import { connectServer, connectCompany, startListCompanies, listCompanies, setError } from './actions/websocket';
+import { connectServer, connectCompany, startListCompanies, listCompanies } from './actions/websocket';
 import { setData, setDataObj, setDataGetDDL } from './actions/query';
+import { history } from './routers';
 
 //função que inicializa o websocket
 /* params:
@@ -55,7 +56,12 @@ export default async (store) => {
                     break;
             }
         } else if(data.status == -1) {
-            store.dispatch(setError(data.response));
+            history.push({
+               pathname: '/error', 
+               state: {
+                   message: data.response
+               } 
+            });
         }
     };
 }

@@ -3,8 +3,7 @@ import styled from 'styled-components';
 import Spinner from 'react-spinkit';
 import { connect } from 'react-redux';
 import theme from '../../themes';
-import Error from './Error';
-import MiniToad from '../MiniToad';
+import Error from '../Error';
 import { startConnectCompany } from '../../actions/websocket';
 import { Select } from '../../components';
 
@@ -41,29 +40,29 @@ const SelectContainer = styled.div`
     company - nome da empresa (para validar se conseguiu pegar já)
     error - mensagem de erro
 */
-class App extends Component{
+class Splash extends Component{
     constructor(props){
         super(props);
         this.state = {};
     }
 
+    componentDidUpdate(){
+        //se a empresa foi conectada, redireciona para o minitoad
+        if(this.props.company){
+            this.props.history.push('/minitoad');
+        }
+    }
+
+    //handle para o change do select de empresas
     handleChangeCompany = (option) => {
         this.setState(() => ({ companySelected: option }), () => this.props.startConnectCompany(option.value));
     }
 
     render() {
-        const { companies, company, error } = this.props;
+        const { companies } = this.props;
 
-        // se deu erro, exibe
-        //se conseguiu pegar a empresa, vai para o minitoad
-        if(error) {
-            return <Error msg={error} />;
-        //se a empresa carregou
-        } else if(company) {
-            document.title = company + ' - ' + document.title;
-            return <MiniToad />
         //se empresa foi selecionada
-        } else if(this.state.companySelected) {
+        if(this.state.companySelected) {
             return (
                 <Background>
                     <Spinner 
@@ -113,7 +112,6 @@ class App extends Component{
 const mapStateToProps = (state) => ({
     companies: state.websocket.companies,
     company: state.websocket.name,
-    error: state.websocket.error
 });
 
 //passa os disparadores das ações por props
@@ -122,4 +120,4 @@ const mapDispatchToProps = {
 };
 
 //exporta o component com redux
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(Splash);

@@ -19,12 +19,6 @@ export default (state = {}, action) => {
                 id: action.id,
                 name: action.name
             };
-
-        case 'SET_ERROR':
-            return {
-                ...state,
-                error: action.error
-            };
             
         default: 
             return state;

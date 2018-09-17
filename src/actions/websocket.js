@@ -43,9 +43,3 @@ export const connectCompany = (id, name) => ({
     id, 
     name
 });
-
-//define a global de erro
-export const setError = (error) => ({
-    type: 'SET_ERROR',
-    error
-});

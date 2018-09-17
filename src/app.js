@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'styled-components';
-import App from './pages/App';
+import AppRouter from './routers';
 import configureStore from './store/configureStore';
 import connectWebsocket from './websocket';
 import theme from './themes';
@@ -16,7 +16,7 @@ const store = configureStore();
 const jsx = (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <App />
+            <AppRouter />
         </ThemeProvider> 
     </Provider>
 );

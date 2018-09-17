@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import theme from '../../themes';
 import { FaExclamationTriangle } from 'react-icons/fa';
@@ -30,13 +30,17 @@ const WarnIcon = styled.span`
 `;
 
 /* props:
-    msg - texto para exibir
+    location.state.message - texto para exibir(passado pelo history.push do route)
 */
-export default ({ msg }) => {
-    return (
-        <Background>
-            <WarnIcon><FaExclamationTriangle /></WarnIcon>
-            <Text>{msg}</Text>
-        </Background>
-    );
-}
+export default class ErrorPage extends Component{
+    render() {
+        const message = (this.props.location.state && this.props.location.state.message);
+
+        return (
+            <Background>
+                <WarnIcon><FaExclamationTriangle /></WarnIcon>
+                <Text>{(message) ? message : 'Página não encontrada'}</Text>
+            </Background>
+        );
+    }
+} 
