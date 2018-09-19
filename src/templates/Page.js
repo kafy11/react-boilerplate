@@ -1,12 +1,24 @@
-import React from 'react';
-import theme from '../themes';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import {
+    UncontrolledDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem 
+} from 'reactstrap';
+import { FaBars } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import theme from '../themes';
+import { Header } from '../components';
 
 const Company = styled.b`
     margin: 0 ${theme.spacing.small}px;
     color: ${theme.palette.warning};
     font-size: ${theme.sizes.big};
     flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 //componente estilizado para organizar o header e content da página
@@ -28,39 +40,61 @@ const PageContainer = styled.div`
     flex-direction: column;
 `;
 
-//cria um componente estilizado para o header
-const Header = styled.div`
-    align-items: center;
-    background-color: ${theme.palette.primary};
-    box-sizing: border-box;
-    color: ${theme.palette.white};
-    display: flex;
-    flex-direction: row;
-    min-height: 48px;
-    max-height: 48px;
-    justify-content: flex-start;
-    padding: ${theme.spacing.small}px;
-    width: 100%;
-`;
+const StyledFaBars = styled(FaBars)`
+    font-size: 1rem;
+`
+
+const NAV_ITEMS = [{
+    to: '/minitoad',
+    label: 'Minitoad'
+}];
 
 /* props:
     children - conteúdo da página
-    title - título da página
+    company - nome da empresa
     leftContentHeader - conteúdo para colocar a esquerda do titulo
     rightContentHeader - conteúdo para colocar a direita do título
+    className - classes passadas por styled()
 */
-export default ({ children, leftContentHeader, rightContentHeader, company }) => {
-    return (
-        <ContentContainer>
-            <Header>
-                {leftContentHeader} 
-                <Company>{company}</Company>
-                {rightContentHeader}
-            </Header>
+export default class Page extends Component {
+    renderNavCollapsed = () => (
+        <UncontrolledDropdown>
+            <DropdownToggle nav>
+                <StyledFaBars color={theme.palette.white}/>
+            </DropdownToggle>
+            <DropdownMenu right>
+                {NAV_ITEMS.map(({ label, to }) => (
+                    <DropdownItem>
+                        <Link to={to}>{label}</Link>
+                    </DropdownItem>
+                ))}
+            </DropdownMenu>
+        </UncontrolledDropdown>
+    )
 
-            <PageContainer>
-                {children}
-            </PageContainer>
-        </ContentContainer>
-    );
+    render() {
+        const { children, leftContentHeader, rightContentHeader, company, className } = this.props;
+        return (
+            <ContentContainer>
+                <Header 
+                    leftContent={leftContentHeader}
+                    centerContent={(
+                        <Company title={company}>
+                            {company}
+                        </Company>
+                    )}
+                    rightContent={(
+                        <div>
+                            {this.renderNavCollapsed()}
+                            {rightContentHeader}
+                        </div>
+                    )}
+                />
+
+                <PageContainer className={className}>
+                    {children}
+                </PageContainer>
+            </ContentContainer>
+        );
+    }
 }

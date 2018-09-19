@@ -20,7 +20,7 @@ const SidebarContainer = styled.div`
 `;
 
 //cria um componente que define a cor do texto (usado para o icone)
-const ColorProvider = styled.div`
+const StyledFaBars = styled(FaBars)`
     color: ${theme.palette.white};
 `;
 
@@ -36,7 +36,7 @@ export default class PageWithSidebar extends Component{
             sidebarOpen - se barra lateral está aberta ou não
         */
         this.state = {
-            bigScreen: mql.matches,
+            bigScreen: (props.fixed) ? mql.matches : false,
             sidebarOpen: false
         };
     }
@@ -85,7 +85,7 @@ export default class PageWithSidebar extends Component{
                     color="link"
                     onClick = {() => this.onSetSidebarOpen(true)}
                 >
-                    <ColorProvider><FaBars /></ColorProvider>
+                    {(this.props.toggleSidebarIcon || <StyledFaBars />)}
                 </Button>
             );
         }
@@ -96,9 +96,11 @@ export default class PageWithSidebar extends Component{
         <SidebarContainer>
             {this.props.sidebarContent}
         </SidebarContainer>
-    )
+    );
 
     render() {
+        const { rightSidebar } = this.props;
+
         return (
             <Sidebar
                 sidebar={this.renderSidebarContent()}
@@ -106,8 +108,12 @@ export default class PageWithSidebar extends Component{
                 docked={this.state.bigScreen}
                 onSetOpen={this.onSetSidebarOpen}
                 styles={{ sidebar: { zIndex: 999 } }}
+                pullRight={rightSidebar}
             >
-                <Page {...this.props} leftContentHeader={this.renderButton()} />
+                <Page {...this.props} 
+                    leftContentHeader={(!rightSidebar && this.renderButton())}
+                    rightContentHeader={(rightSidebar && this.renderButton())}  
+                />
             </Sidebar>
         );
     }

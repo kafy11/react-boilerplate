@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+import { FaDatabase } from 'react-icons/fa';
 import PageWithSidebar from '../../templates/PageWithSidebar';
 import { startQuery, startSelect, startListObjects, startGetDDL } from '../../actions/query';
 import { Tabs } from '../../components';
 import Sidebar from './Sidebar';
 import QueryTab from './QueryTab';
 import ResultTab from './ResultTab';
+
+const StyledFaDatabase = styled(FaDatabase)`
+    color: ${({ theme }) => theme.palette.white};
+`;
 
 /* props:
     data - dados do resultado da query
@@ -122,6 +128,8 @@ class MiniToad extends Component{
                 sidebarOpened={this.state.sidebarOpened}
                 onSidebarToggle={this.handleSidebarToggle}
                 company={company}
+                fixed={true}
+                toggleSidebarIcon={<StyledFaDatabase />}
             >
                 <Tabs 
                     tabs={tabs} 
