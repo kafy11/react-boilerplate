@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Spinner from 'react-spinkit';
-import { Table } from '../../components';
+import { Table, Loading } from '../../components';
 import theme from '../../themes';
 
 //Container da página
@@ -12,12 +11,6 @@ const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
     padding: ${({ theme }) => theme.spacing.small}px;
-`;
-
-//container que centraliza o spinner
-const SpinnerContainer = PageContainer.extend` 
-    justify-content: center;
-    align-items: center;
 `;
 
 //renderiza o conteúdo englobado pelo PageContainer
@@ -34,15 +27,7 @@ const renderContent = (content) => (
 export default ({ data, running }) => {
     //mostra o loading
     if(running) {
-        return (
-            <SpinnerContainer>
-                <Spinner 
-                    name="ball-spin-fade-loader" 
-                    color={theme.palette.primary} 
-                    fadeIn="none"
-                />
-            </SpinnerContainer>
-        );
+        return <Loading />;
     }
 
     //se os dados estiverem vazio

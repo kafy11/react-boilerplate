@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { FaDatabase } from 'react-icons/fa';
+import Loadable from 'react-loadable';
 import PageWithSidebar from '../../templates/PageWithSidebar';
 import { startQuery, startSelect, startListObjects, startGetDDL } from '../../actions/query';
-import { Tabs } from '../../components';
+import { Tabs, Loading } from '../../components';
 import Sidebar from './Sidebar';
-import QueryTab from './QueryTab';
-import ResultTab from './ResultTab';
+
+const QueryTab = Loadable({
+    loader: () => import('./QueryTab'),
+    loading: () => Loading
+});
+
+const ResultTab = Loadable({
+    loader: () => import('./ResultTab'),
+    loading: () => Loading
+});
 
 const StyledFaDatabase = styled(FaDatabase)`
     color: ${({ theme }) => theme.palette.white};

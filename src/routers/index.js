@@ -4,7 +4,6 @@ import createHistory from 'history/createBrowserHistory';
 import Loadable from 'react-loadable';
 import PrivateRoute from './PrivateRoute';
 import Splash from '../pages/Splash';
-import Error from '../pages/Error';
 
 export const history = createHistory({
     basename: BASENAME
@@ -12,6 +11,11 @@ export const history = createHistory({
 
 const MiniToad = Loadable({
     loader: () => import('../pages/MiniToad'),
+    loading: () => Splash
+});
+
+const Error = Loadable({
+    loader: () => import('../pages/Error'),
     loading: () => Splash
 });
 

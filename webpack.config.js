@@ -1,19 +1,17 @@
 const path = require('path');
 const webpack = require('webpack');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => {
     const isProduction = env.production;
-    const CSSExctract = new ExtractTextPlugin('styles.css');
 
     return {
         entry: ['babel-polyfill', './src/app.js'],
         output: {
             path: path.join(__dirname, 'public'),
-            chunkFilename: 'js/[name].[chunkhash].js',
-            filename: 'js/[name].[chunkhash].js'
+            filename: 'js/[name].[contenthash].js'
         },
         module: {
             rules: [{
@@ -22,16 +20,17 @@ module.exports = (env) => {
                 exclude: /node_modules\/(?!react-icons)/,
             }, {
                 test: /\.s?css$/,
-                use: CSSExctract.extract({
-                    use: [
-                        {
-                            loader: 'css-loader',
-                            options: {
-                                sourceMap: true
-                            }
-                        }
-                    ]
-                })
+                use: [{
+                    loader: MiniCssExtractPlugin.loader,
+                    options: {
+                        publicPath: 'css'
+                    }
+                },{
+                    loader: 'css-loader',
+                    options: {
+                        sourceMap: true
+                    }
+                }]
             }]
         },
         plugins: [
@@ -42,19 +41,27 @@ module.exports = (env) => {
                 alwaysWriteToDisk: true,
                 template: 'template.html'
             }),
-            CSSExctract,
             new webpack.DefinePlugin({
                 BASENAME: (isProduction) ? "'/bpm/_remote_gateway'" : "'/'"
             }),
-            new webpack.HashedModuleIdsPlugin(),
-            new webpack.optimize.CommonsChunkPlugin({
-                name:'vendor',
-                filename: 'vendor.[chunkhash].js'
+            new MiniCssExtractPlugin({
+                filename: "[name].css",
+                chunkFilename: "[id].css"
             }),
-            new webpack.optimize.CommonsChunkPlugin({
-                name:'manifest'
-            })
+            new webpack.HashedModuleIdsPlugin()
         ],
+        optimization: {
+            runtimeChunk: 'single',
+            splitChunks: {
+                cacheGroups: {
+                    vendor: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name: 'vendors',
+                        chunks: 'all'
+                    }
+                }
+            }
+        },
         devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),

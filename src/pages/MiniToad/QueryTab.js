@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import LaddaButton, { S, CONTRACT } from 'react-ladda';
-import Spinner from 'react-spinkit';
+import { Loading } from '../../components';
 import theme from '../../themes';
 
 //container da página
@@ -11,12 +11,6 @@ const PageContainer = styled.div`
     background-color: ${theme.palette.light};
     display: flex;
     flex-direction: column;
-`;
-
-//container que centraliza o spinner
-const SpinnerContainer = PageContainer.extend` 
-    justify-content: center;
-    align-items: center;
 `;
 
 //textarea
@@ -77,15 +71,7 @@ export default class QueryTab extends Component{
 
         //exibe o loading da página
         if(loadingQuery){
-            return (
-                <SpinnerContainer>
-                    <Spinner 
-                        name="ball-spin-fade-loader" 
-                        color={theme.palette.primary} 
-                        fadeIn="none"
-                    />
-                </SpinnerContainer>
-            );
+            return <Loading />;
         }
 
         return (
