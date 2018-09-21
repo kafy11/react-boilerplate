@@ -12,7 +12,8 @@ module.exports = (env) => {
         entry: ['babel-polyfill', './src/app.js'],
         output: {
             path: path.join(__dirname, 'public'),
-            filename: 'js/[name].[hash].js',
+            chunkFilename: 'js/[name].[chunkhash].js',
+            filename: 'js/[name].[chunkhash].js'
         },
         module: {
             rules: [{
@@ -44,6 +45,14 @@ module.exports = (env) => {
             CSSExctract,
             new webpack.DefinePlugin({
                 BASENAME: (isProduction) ? "'/bpm/_remote_gateway'" : "'/'"
+            }),
+            new webpack.HashedModuleIdsPlugin(),
+            new webpack.optimize.CommonsChunkPlugin({
+                name:'vendor',
+                filename: 'vendor.[chunkhash].js'
+            }),
+            new webpack.optimize.CommonsChunkPlugin({
+                name:'manifest'
             })
         ],
         devtool: isProduction ? 'source-map' : 'inline-source-map',

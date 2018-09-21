@@ -1,13 +1,18 @@
 import React from 'react';
 import { Router, Route, Switch } from 'react-router-dom';
 import createHistory from 'history/createBrowserHistory';
+import Loadable from 'react-loadable';
 import PrivateRoute from './PrivateRoute';
-import MiniToad from '../pages/MiniToad';
 import Splash from '../pages/Splash';
 import Error from '../pages/Error';
 
 export const history = createHistory({
     basename: BASENAME
+});
+
+const MiniToad = Loadable({
+    loader: () => import('../pages/MiniToad'),
+    loading: () => Splash
 });
 
 const AppRouter = () => (
