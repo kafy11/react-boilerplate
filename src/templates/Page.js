@@ -23,7 +23,7 @@ const Company = styled.b`
 
 //componente estilizado para organizar o header e content da página
 const ContentContainer = styled.div`
-    height: 100%;
+    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,6 +47,9 @@ const StyledFaBars = styled(FaBars)`
 const NAV_ITEMS = [{
     to: '/minitoad',
     label: 'Minitoad'
+},{
+    to: '/filezilla',
+    label: 'Filezilla'
 }];
 
 /* props:

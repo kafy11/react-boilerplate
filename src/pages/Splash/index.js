@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import Spinner from 'react-spinkit';
 import { connect } from 'react-redux';
 import theme from '../../themes';
-import Error from '../Error';
 import { startConnectCompany } from '../../actions/websocket';
 import { Select } from '../../components';
 
@@ -47,14 +46,14 @@ class Splash extends Component{
 
         const permissions = JSON.parse(sessionStorage.getItem('permissions') || '[]');
 
-        if(permissions.indexOf('WEBSOCKET') == -1) {
+        /*if(permissions.indexOf('WEBSOCKET') == -1) {
             props.history.push({
                 pathname: '/error', 
                 state: {
                     message: 'Você não possui permissão para acessar'
                 } 
             });
-        }
+        }*/
     }
 
     componentDidUpdate(){

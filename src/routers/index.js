@@ -9,6 +9,11 @@ export const history = createHistory({
     basename: BASENAME
 });
 
+const Filezilla = Loadable({
+    loader: () => import('../pages/Filezilla'),
+    loading: () => Splash
+});
+
 const MiniToad = Loadable({
     loader: () => import('../pages/MiniToad'),
     loading: () => Splash
@@ -25,6 +30,7 @@ const AppRouter = () => (
             <Switch>
                 <Route path='/' component={Splash} exact={true} />
                 <PrivateRoute path='/minitoad' component={MiniToad} />
+                <PrivateRoute path='/filezilla' component={Filezilla} />
                 <Route path='/error' component={Error} exact={true} />
                 <Route component={Error} />
             </Switch>

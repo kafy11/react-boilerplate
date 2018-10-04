@@ -2,7 +2,7 @@
 
 //define o estado de executando query
 export const setRunning = () => ({
-    type: 'SET_RUNNING'
+    type: 'SET_RUNNING_QUERY'
 });
 
 //define o estado de carregando lista de objeto
@@ -102,7 +102,7 @@ export const startGetDDL = (type, object) => {
     data - dados do resultado
 */
 export const setData = (data) => ({
-    type: 'SET_DATA',
+    type: 'SET_DATA_QUERY',
     data
 });
 

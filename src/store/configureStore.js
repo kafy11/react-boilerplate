@@ -1,6 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { queryReducer, websocketReducer } from '../reducers';
+import { queryReducer, websocketReducer, filezillaReducer } from '../reducers';
 
 //inclui o compose necessário para a extensão do redux para o chrome
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -10,7 +10,8 @@ export default () => {
     const store = createStore(
         combineReducers({
             query: queryReducer,
-            websocket: websocketReducer
+            websocket: websocketReducer,
+            filezilla: filezillaReducer
         }),
         composeEnhancers(applyMiddleware(thunk)) //adiciona o plugin redux-thunk que permite eventos assíncronos
     );

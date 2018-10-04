@@ -2,14 +2,14 @@
 //NÃO PODE SOBRESCREVER OS PARÂMETROS
 export default (state = {}, action) => {
     switch (action.type) {
-        case 'SET_DATA':
+        case 'SET_DATA_QUERY':
             return {
                 ...state,
                 data: action.data,
                 running: false
             };
 
-        case 'SET_RUNNING':
+        case 'SET_RUNNING_QUERY':
             return {
                 ...state,
                 data: undefined,
