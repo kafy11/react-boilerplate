@@ -46,14 +46,14 @@ class Splash extends Component{
 
         const permissions = JSON.parse(sessionStorage.getItem('permissions') || '[]');
 
-        /*if(permissions.indexOf('WEBSOCKET') == -1) {
+        if(process.env.NODE_ENV == 'production' && permissions.indexOf('WEBSOCKET') == -1) {
             props.history.push({
                 pathname: '/error', 
                 state: {
                     message: 'Você não possui permissão para acessar'
                 } 
             });
-        }*/
+        }
     }
 
     componentDidUpdate(){

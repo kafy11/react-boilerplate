@@ -46,3 +46,28 @@ export const startListDir = (directory) => {
         dispatch(setLoading());
     }
 };
+
+//define o conteúdo do arquivo
+export const setFileContent = (fileContent) => ({
+    type: 'SET_FILE_CONTENT',
+    fileContent
+});
+
+//dispara a ação de pegar conteúdo do arquivo
+/* params:
+    directory - caminho da pasta
+*/
+export const startGetFile = (file) => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: 'getfile',
+            frontAction: 'getFile',
+            to: id,
+            file
+        });
+        
+        dispatch(setLoading());
+    }
+};

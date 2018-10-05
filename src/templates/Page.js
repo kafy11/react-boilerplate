@@ -66,8 +66,8 @@ export default class Page extends Component {
                 <StyledFaBars color={theme.palette.white}/>
             </DropdownToggle>
             <DropdownMenu right>
-                {NAV_ITEMS.map(({ label, to }) => (
-                    <DropdownItem>
+                {NAV_ITEMS.map(({ label, to }, i) => (
+                    <DropdownItem key={i + ''}>
                         <Link to={to}>{label}</Link>
                     </DropdownItem>
                 ))}

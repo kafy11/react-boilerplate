@@ -13,18 +13,13 @@ const PageContainer = styled.div`
     padding: ${({ theme }) => theme.spacing.small}px;
 `;
 
-//renderiza o conteúdo englobado pelo PageContainer
-const renderContent = (content) => (
-    <PageContainer>
-        {content}
-    </PageContainer>
-);
-
 /* props:
     data - dados do resultado
     running - mostra o loading
 */
 export default ({ data, running }) => {
+    let content;
+
     //mostra o loading
     if(running) {
         return <Loading />;
@@ -32,18 +27,18 @@ export default ({ data, running }) => {
 
     //se os dados estiverem vazio
     if(!data || data.length == 0) {
-        return renderContent('Nenhum resultado!');
+        content = 'Nenhum resultado!';
+    } else if(typeof(data) == 'string') { //se for uma string
+        content = data;
+    } else if(data === true){ //se for o booleano true
+        content = "Query executada";
+    } else {
+        content = <Table data={data} />;
     }
 
-    //se for uma string
-    if(typeof(data) == 'string') {
-        return renderContent(data);
-    }
-
-    //se for o booleano true
-    if(data === true){
-        return renderContent("Query executada");
-    }
-
-    return renderContent(<Table data={data} />);
+    return (
+        <PageContainer>
+            {content}
+        </PageContainer>
+    );
 }

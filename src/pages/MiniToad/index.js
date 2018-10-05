@@ -10,12 +10,12 @@ import Sidebar from './Sidebar';
 
 const QueryTab = Loadable({
     loader: () => import('./QueryTab'),
-    loading: () => Loading
+    loading: Loading
 });
 
 const ResultTab = Loadable({
     loader: () => import('./ResultTab'),
-    loading: () => Loading
+    loading: Loading
 });
 
 const StyledFaDatabase = styled(FaDatabase)`

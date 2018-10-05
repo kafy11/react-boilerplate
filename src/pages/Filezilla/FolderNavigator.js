@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 import FolderItem from './FolderItem';
 
 const Container = styled.div`
     padding: ${({ theme }) => theme.spacing.small}px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 `;
 
 const FolderList = styled.ul`
@@ -13,6 +17,7 @@ const FolderList = styled.ul`
     border: 1px solid ${({ theme }) => theme.palette.grayscale[1]};
     border-radius: ${({ theme }) => theme.spacing.xsmall}px;
     margin: ${({ theme }) => theme.spacing.xsmall}px 0;
+    flex: 1;
 `;
 
 //input da path da folder
@@ -44,8 +49,11 @@ export default class FolderNavigator extends Component {
     };
 
     handleItemClick = ({ name, isFolder }) => {
+        const path = this.props.path + '/' + name;
         if(isFolder) {
-            this.props.onChangeFolder(this.props.path + '/' + name);
+            this.props.onChangeFolder(path);
+        } else {
+            this.props.onOpenFile(path);
         }
     }
 
@@ -72,12 +80,14 @@ export default class FolderNavigator extends Component {
                     value={this.state.path}
                 />
                 <FolderList>
-                    <FolderItem 
-                        name=".." 
-                        isFolder={true} 
-                        onClick={this.handleItemClick} 
-                    />
-                    {this.renderContent()}
+                    <Scrollbars>
+                        <FolderItem 
+                            name=".." 
+                            isFolder={true} 
+                            onClick={this.handleItemClick} 
+                        />
+                        {this.renderContent()}
+                    </Scrollbars>
                 </FolderList>
             </Container>
         );

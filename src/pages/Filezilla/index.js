@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Loading } from '../../components';
 import Page from '../../templates/Page';
 import FolderNavigator from './FolderNavigator';
-import { startListDir } from '../../actions/filezilla';
+import FileEditor from './FileEditor';
+import { startListDir, startGetFile, setFileContent } from '../../actions/filezilla';
 
 class Filezilla extends Component {
     constructor(props){
@@ -20,24 +21,47 @@ class Filezilla extends Component {
         this.props.startListDir(path);
     }
 
+    handleOpenFile = (path) => {
+        this.setState(() => ({ openedFile: path }), () => {
+            this.props.startGetFile(path);
+        });
+    }
+
+    handleBackFile = () => {
+        this.setState(() => ({ openedFile: undefined }), () => {
+            this.props.setFileContent('');
+        });
+    };
+
     render() {
-        const { company, loading, folderContent } = this.props;
+        const { company, loading, folderContent, fileContent } = this.props;
+        const { currFolder, openedFile } = this.state;
+        let content;
 
         if(loading){
-            return (
-                <Page company={company}>
-                    <Loading />
-                </Page>
+            content = <Loading />;
+        } else if(fileContent) {
+            content = (
+                <FileEditor 
+                    content={fileContent} 
+                    path={openedFile}
+                    onBack={this.handleBackFile}
+                />
+            );
+        } else {
+            content = (
+                <FolderNavigator 
+                    path={currFolder}
+                    content={folderContent}
+                    onChangeFolder={this.handleChangeDir}
+                    onOpenFile={this.handleOpenFile}
+                />
             );
         }
 
         return (
             <Page company={company}>
-                <FolderNavigator 
-                    path={this.state.currFolder}
-                    content={folderContent}
-                    onChangeFolder={this.handleChangeDir}
-                />
+                {content}
             </Page>
         );
     }
@@ -47,12 +71,15 @@ class Filezilla extends Component {
 const mapStateToProps = (state) => ({
     company: state.websocket.name,
     folderContent: state.filezilla.folderContent,
+    fileContent: state.filezilla.fileContent,
     loading: state.filezilla.loading
 });
 
 //passa o disparo das ações para props 
 const mapDispatchToProps = {
-    startListDir
+    startListDir,
+    startGetFile,
+    setFileContent
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Filezilla);

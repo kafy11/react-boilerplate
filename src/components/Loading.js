@@ -19,8 +19,8 @@ const SpinnerContainer = styled.div`
     data - dados do resultado
     running - mostra o loading
 */
-export default ({ color }) => (
-    <SpinnerContainer>
+export default ({ color, className }) => (
+    <SpinnerContainer className={className}>
         <Spinner 
             name="ball-spin-fade-loader" 
             color={color || theme.palette.primary} 

@@ -1,6 +1,6 @@
 import { connectServer, connectCompany, startListCompanies, listCompanies } from './actions/websocket';
 import { setData, setDataObj, setDataGetDDL } from './actions/query';
-import { setFolderContent } from './actions/filezilla';
+import { setFolderContent, setFileContent } from './actions/filezilla';
 import { history } from './routers';
 
 //função que inicializa o websocket
@@ -59,6 +59,11 @@ export default async (store) => {
                 //resposta da ação disparada no filezilla.startListDir
                 case 'listDir':
                     store.dispatch(setFolderContent(data.response));
+                    break;
+
+                //resposta da ação disparada no filezilla.startGetFile
+                case 'getFile':
+                    store.dispatch(setFileContent(data.response));
                     break;
             }
         } else if(data.status == -1) {

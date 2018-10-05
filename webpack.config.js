@@ -8,6 +8,7 @@ module.exports = (env) => {
     const isProduction = env.production;
 
     return {
+        mode: (isProduction) ? 'production' : 'development',
         entry: ['babel-polyfill', './src/app.js'],
         output: {
             path: path.join(__dirname, 'public'),
@@ -42,7 +43,7 @@ module.exports = (env) => {
                 template: 'template.html'
             }),
             new webpack.DefinePlugin({
-                BASENAME: (isProduction) ? "'/bpm/_remote_gateway'" : "'/'"
+                BASENAME: (isProduction) ? "'/bpm/_remote_gateway'" : "'/'",
             }),
             new MiniCssExtractPlugin({
                 filename: "[name].css",

@@ -79,16 +79,14 @@ export default class PageWithSidebar extends Component{
 
     //se for uma tela pequena, mostra o botão
     renderButton() {
-        if(!this.state.bigScreen) {
-            return (
-                <Button 
-                    color="link"
-                    onClick = {() => this.onSetSidebarOpen(true)}
-                >
-                    {(this.props.toggleSidebarIcon || <StyledFaBars />)}
-                </Button>
-            );
-        }
+        return !this.state.bigScreen && (
+            <Button 
+                color="link"
+                onClick = {() => this.onSetSidebarOpen(true)}
+            >
+                {(this.props.toggleSidebarIcon || <StyledFaBars />)}
+            </Button>
+        );
     }
 
     //renderiza o conteúdo da barra lateral
