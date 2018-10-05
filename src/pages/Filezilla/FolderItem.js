@@ -4,12 +4,12 @@ import { FaFile, FaFolder } from 'react-icons/fa';
 
 const FolderItem = styled.li`
     padding: 0 ${({ theme }) => theme.spacing.xsmall}px;
-    display: flex;
-    align-items: center;
     cursor: pointer;
+    float: left;
+    clear: both;
 `;
 
-const Icon = styled.div`
+const Icon = styled.span`
     margin-right: ${({ theme }) => theme.spacing.xsmall}px;
 `;
 

@@ -40,7 +40,7 @@ class Filezilla extends Component {
 
         if(loading){
             content = <Loading />;
-        } else if(fileContent) {
+        } else if(openedFile) {
             content = (
                 <FileEditor 
                     content={fileContent} 

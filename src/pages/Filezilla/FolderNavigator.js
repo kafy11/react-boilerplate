@@ -1,22 +1,11 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Scrollbars } from 'react-custom-scrollbars';
-import FolderItem from './FolderItem';
+import FolderList from './FolderList';
 
 const Container = styled.div`
     padding: ${({ theme }) => theme.spacing.small}px;
     display: flex;
     flex-direction: column;
-    flex: 1;
-`;
-
-const FolderList = styled.ul`
-    list-style: none;
-    padding: 0;
-    background-color: ${({ theme }) => theme.palette.white};
-    border: 1px solid ${({ theme }) => theme.palette.grayscale[1]};
-    border-radius: ${({ theme }) => theme.spacing.xsmall}px;
-    margin: ${({ theme }) => theme.spacing.xsmall}px 0;
     flex: 1;
 `;
 
@@ -48,30 +37,9 @@ export default class FolderNavigator extends Component {
         }
     };
 
-    handleItemClick = ({ name, isFolder }) => {
-        const path = this.props.path + '/' + name;
-        if(isFolder) {
-            this.props.onChangeFolder(path);
-        } else {
-            this.props.onOpenFile(path);
-        }
-    }
-
-    renderContent = () => {
-        const { content } = this.props;
-
-        if(content) {
-            return content.map((item, i) => (
-                <FolderItem 
-                    key={i + ''} 
-                    {...item} 
-                    onClick={this.handleItemClick}
-                />
-            ));
-        }
-    }
-
     render() {
+        const { content, onChangeFolder, onOpenFile, path } = this.props;
+
         return (
             <Container>
                 <FolderPath 
@@ -79,16 +47,13 @@ export default class FolderNavigator extends Component {
                     onKeyDown={this.handleKeyPress} 
                     value={this.state.path}
                 />
-                <FolderList>
-                    <Scrollbars>
-                        <FolderItem 
-                            name=".." 
-                            isFolder={true} 
-                            onClick={this.handleItemClick} 
-                        />
-                        {this.renderContent()}
-                    </Scrollbars>
-                </FolderList>
+
+                <FolderList 
+                    content={content}
+                    path={path}
+                    onChangeFolder={onChangeFolder}
+                    onOpenFile={onOpenFile}
+                />
             </Container>
         );
     }
