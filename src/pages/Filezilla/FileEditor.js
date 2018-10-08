@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { Button } from 'reactstrap';
+import { Button } from '../../components';
 import { FaSave, FaChevronLeft } from 'react-icons/fa';
 import theme from '../../themes';
 
@@ -66,7 +66,7 @@ export default class FileEditor extends Component {
                     <Title>{path}</Title>
                     
                     <Button 
-                        color="primary"
+                        type="primary"
                         onClick={this.handleSave}
                     >
                         <FaSave />

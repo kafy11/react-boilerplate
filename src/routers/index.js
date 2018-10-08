@@ -32,15 +32,13 @@ const Error = Loadable({
 
 const AppRouter = () => (
     <Router history={history}>
-        <div>
-            <Switch>
-                <Route path='/' component={Splash} exact={true} />
-                <PrivateRoute path='/minitoad' component={MiniToad} />
-                <PrivateRoute path='/filezilla' component={Filezilla} />
-                <Route path='/error' component={Error} exact={true} />
-                <Route component={Error} />
-            </Switch>
-        </div>
+        <Switch>
+            <Route path='/' component={Splash} exact={true} />
+            <PrivateRoute path='/minitoad' component={MiniToad} />
+            <PrivateRoute path='/filezilla' component={Filezilla} />
+            <Route path='/error' component={Error} exact={true} />
+            <Route component={Error} />
+        </Switch>
     </Router>
 );
 

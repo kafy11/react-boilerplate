@@ -7,7 +7,7 @@ theme.palette = {
     light: "#ecf0f1",
     success: "#28a745",
     danger: "#dc3545",
-    primary: "#007bff",
+    primary: "#0072ff",
     secondary: "#6c757d",
     warning: "#ffc107",
     grayscale: ["#bdc3c7","#7f8c8d","#95a5a6"],
@@ -32,6 +32,14 @@ theme.palette = {
         click: { bg: '#bd2130', border: '#b21f2d' }
     }
 };
+
+theme.background = {
+    blue: `
+        background: #00c6ff; /* fallback for old browsers */
+        background: -webkit-linear-gradient(to top, #00c6ff, #0072ff); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to top, #00c6ff, #0072ff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    `
+}
 
 //tamanhos de fonte
 theme.sizes = {

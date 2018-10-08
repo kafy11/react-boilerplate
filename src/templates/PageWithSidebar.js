@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Sidebar from 'react-sidebar';
-import { Button } from 'reactstrap';
+import { Button } from '../components';
 import { FaBars } from 'react-icons/fa';
 import theme from '../themes';
 import styled from 'styled-components';
@@ -17,6 +17,7 @@ const SidebarContainer = styled.div`
     font-size: ${theme.sizes.regular};
     background-color: ${theme.palette.primary};
     color: ${theme.palette.white};
+    ${theme.background.blue}
 `;
 
 //cria um componente que define a cor do texto (usado para o icone)
@@ -81,7 +82,7 @@ export default class PageWithSidebar extends Component{
     renderButton() {
         return !this.state.bigScreen && (
             <Button 
-                color="link"
+                link
                 onClick = {() => this.onSetSidebarOpen(true)}
             >
                 {(this.props.toggleSidebarIcon || <StyledFaBars />)}

@@ -43,3 +43,15 @@ export const connectCompany = (id, name) => ({
     id, 
     name
 });
+
+export const startRefresh = () => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: 'refresh',
+            frontAction: 'refresh',
+            to: id,
+        });
+    }
+}

@@ -8,7 +8,7 @@ import { Select } from '../../components';
 
 //fundo azul da página
 const Background = styled.div`
-    background-color: ${theme.palette.primary};
+    ${theme.background.blue}
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -26,7 +26,7 @@ const Text = styled.span`
     margin-top: ${theme.spacing.large}px;
 `;
 
-const SelectContainer = styled.div`
+const StyledSelect = styled(Select)`
     width: 500px;
     max-width: 50%;
 `;
@@ -93,13 +93,11 @@ class Splash extends Component{
 
             return (
                 <Background>
-                    <SelectContainer>
-                        <Select 
-                            placeholder="Empresa"
-                            options={options}
-                            onChange={this.handleChangeCompany}
-                        />
-                    </SelectContainer>
+                    <StyledSelect 
+                        placeholder="Empresa"
+                        options={options}
+                        onChange={this.handleChangeCompany}
+                    />
                 </Background>
             )
         }

@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Loading } from '../../components';
+import { FaSyncAlt } from 'react-icons/fa';
+import styled from 'styled-components';
+import { Loading, Button } from '../../components';
 import Page from '../../templates/Page';
 import FolderNavigator from './FolderNavigator';
 import FileEditor from './FileEditor';
 import { startListDir, startGetFile, setFileContent, startPublishFile } from '../../actions/filezilla';
+import { startRefresh } from '../../actions/websocket';
+
+//cria um componente que define a cor do texto (usado para o icone)
+const StyledFaSyncAlt = styled(FaSyncAlt)`
+    color: ${({ theme }) => theme.palette.white};
+`;
 
 class Filezilla extends Component {
     constructor(props){
@@ -47,6 +55,15 @@ class Filezilla extends Component {
         this.setState(() => ({ openedFile: undefined }));
     }
 
+    renderRefresh = () => (
+        <Button 
+            link
+            onClick={this.props.startRefresh}
+        >
+            <StyledFaSyncAlt />
+        </Button>
+    );
+
     render() {
         const { company, loading, folderContent, fileContent } = this.props;
         const { currFolder, openedFile } = this.state;
@@ -76,7 +93,10 @@ class Filezilla extends Component {
         }
 
         return (
-            <Page company={company}>
+            <Page 
+                company={company}
+                leftContentHeader={this.renderRefresh()}
+            >
                 {content}
             </Page>
         );
@@ -96,7 +116,8 @@ const mapDispatchToProps = {
     startListDir,
     startGetFile,
     setFileContent,
-    startPublishFile
+    startPublishFile,
+    startRefresh
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Filezilla);
