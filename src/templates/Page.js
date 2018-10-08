@@ -44,6 +44,10 @@ const StyledFaBars = styled(FaBars)`
     font-size: 1rem;
 `
 
+const StyledDropdownItem = styled(DropdownItem)`
+    cursor: pointer;
+`;
+
 const NAV_ITEMS = [{
     to: '/minitoad',
     label: 'Minitoad'
@@ -60,6 +64,8 @@ const NAV_ITEMS = [{
     className - classes passadas por styled()
 */
 export default class Page extends Component {
+    handleMenuClick = (to) => this.props.history.push(to);
+
     renderNavCollapsed = () => (
         <UncontrolledDropdown>
             <DropdownToggle nav>
@@ -67,9 +73,11 @@ export default class Page extends Component {
             </DropdownToggle>
             <DropdownMenu right>
                 {NAV_ITEMS.map(({ label, to }, i) => (
-                    <DropdownItem key={i + ''}>
-                        <Link to={to}>{label}</Link>
-                    </DropdownItem>
+                    <Link to={to}>
+                        <StyledDropdownItem key={i + ''}>
+                            {label}
+                        </StyledDropdownItem>
+                    </Link>
                 ))}
             </DropdownMenu>
         </UncontrolledDropdown>
@@ -87,10 +95,10 @@ export default class Page extends Component {
                         </Company>
                     )}
                     rightContent={(
-                        <div>
+                        <>
                             {this.renderNavCollapsed()}
                             {rightContentHeader}
-                        </div>
+                        </>
                     )}
                 />
 
