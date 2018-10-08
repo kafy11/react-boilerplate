@@ -12,6 +12,7 @@ export default (state = {}, action) => {
             return {
                 ...state,
                 loading: false,
+                fileContent: '',
                 folderContent: action.folderContent
             };
 

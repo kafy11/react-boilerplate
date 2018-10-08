@@ -4,7 +4,7 @@ import { Loading } from '../../components';
 import Page from '../../templates/Page';
 import FolderNavigator from './FolderNavigator';
 import FileEditor from './FileEditor';
-import { startListDir, startGetFile, setFileContent } from '../../actions/filezilla';
+import { startListDir, startGetFile, setFileContent, startPublishFile } from '../../actions/filezilla';
 
 class Filezilla extends Component {
     constructor(props){
@@ -33,6 +33,20 @@ class Filezilla extends Component {
         });
     };
 
+    handleNewFile = (path) => this.setState(() => ({ openedFile: path }));
+
+    handleSaveFile = (content) => {
+        const { startPublishFile, startListDir } = this.props;
+        const { openedFile, currFolder } = this.state;
+
+        startPublishFile({ 
+            file: openedFile,
+            content
+        });
+        startListDir(currFolder);
+        this.setState(() => ({ openedFile: undefined }));
+    }
+
     render() {
         const { company, loading, folderContent, fileContent } = this.props;
         const { currFolder, openedFile } = this.state;
@@ -46,6 +60,7 @@ class Filezilla extends Component {
                     content={fileContent} 
                     path={openedFile}
                     onBack={this.handleBackFile}
+                    onSave={this.handleSaveFile}
                 />
             );
         } else {
@@ -55,6 +70,7 @@ class Filezilla extends Component {
                     content={folderContent}
                     onChangeFolder={this.handleChangeDir}
                     onOpenFile={this.handleOpenFile}
+                    onNewFile={this.handleNewFile}
                 />
             );
         }
@@ -79,7 +95,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     startListDir,
     startGetFile,
-    setFileContent
+    setFileContent,
+    startPublishFile
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Filezilla);

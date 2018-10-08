@@ -9,7 +9,6 @@ import theme from './themes';
 import 'normalize.css/normalize.css'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'ladda/dist/ladda.min.css';
-import 'react-contexify/dist/ReactContexify.min.css';
 
 //pega o store do redux
 const store = configureStore();

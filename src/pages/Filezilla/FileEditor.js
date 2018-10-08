@@ -42,8 +42,22 @@ const StyledBack = styled(FaChevronLeft)`
 `;
 
 export default class FileEditor extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            content: props.content
+        };
+    }
+
+    handleChangeContent = (e) => {
+        const content = e.target.value;
+        this.setState(() => ({ content }));
+    }
+
+    handleSave = () => this.props.onSave(this.state.content);
+
     render() {
-        const { content, path, onBack } = this.props;
+        const { path, onBack } = this.props;
     
         return (
             <Container>
@@ -53,13 +67,15 @@ export default class FileEditor extends Component {
                     
                     <Button 
                         color="primary"
+                        onClick={this.handleSave}
                     >
                         <FaSave />
                     </Button>
                 </Header>
 
                 <FileInput 
-                    value={content}
+                    value={this.state.content}
+                    onChange={this.handleChangeContent}
                 />
             </Container>
         );

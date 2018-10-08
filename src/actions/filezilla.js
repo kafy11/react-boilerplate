@@ -55,7 +55,7 @@ export const setFileContent = (fileContent) => ({
 
 //dispara a ação de pegar conteúdo do arquivo
 /* params:
-    directory - caminho da pasta
+    file - caminho do arquivo
 */
 export const startGetFile = (file) => {
     return (dispatch, getState) => {
@@ -71,3 +71,22 @@ export const startGetFile = (file) => {
         dispatch(setLoading());
     }
 };
+
+//dispara a ação de publicar arquivo
+/* params:
+    file - caminho do arquivo
+    content - conteúdo do arquivo
+*/
+export const startPublishFile = ({ file, content }) => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: 'publish',
+            frontAction: 'saveFile',
+            to: id,
+            file,
+            content
+        });
+    }
+}
