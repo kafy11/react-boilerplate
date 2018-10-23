@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
 import FolderItem from './FolderItem';
+import DeleteModal from './DeleteModal';
 
-const FolderList = styled.ul`
+const Container = styled.ul`
     list-style: none;
     padding: 0;
     background-color: ${({ theme }) => theme.palette.white};
@@ -13,30 +14,54 @@ const FolderList = styled.ul`
     flex: 1;
 `;
 
-export default ({ content, onOpen }) => {
-    const renderContent = () => {
+export default class FolderList extends Component {
+    constructor(props){
+        super(props);
+        this.state = {};
+    }
+
+    handleDeleteClick = (toDelete) => this.setState(() => ({ showDelModal: true, toDelete }));
+    handleCloseDelModal = () => this.setState(() => ({ showDelModal: false }));
+    handleSubmitDelModal = () => {
+        this.setState(() => ({ showDelModal: false }));
+        this.props.onDelete(this.state.toDelete);
+    }
+
+    renderContent = () => {
+        const { content, onOpen } = this.props;
+
         if(content) {
             return content.map((item, i) => (
                 <FolderItem 
                     key={i + ''} 
                     {...item} 
                     onClick={onOpen}
+                    onDelete={this.handleDeleteClick}
                 />
             ));
         }
     }
 
-    return (
-        <FolderList>
-            <Scrollbars>
-                <FolderItem 
-                    name=".." 
-                    isFolder={true} 
-                    onClick={onOpen} 
+    render(){
+        return (
+            <Container>
+                <Scrollbars>
+                    <FolderItem 
+                        name=".." 
+                        isFolder={true} 
+                        onClick={this.props.onOpen} 
+                    />
+                    {this.renderContent()}
+                </Scrollbars>
+    
+                <DeleteModal 
+                    {...this.state.toDelete}
+                    show={this.state.showDelModal}
+                    onClose={this.handleCloseDelModal}
+                    onSubmit={this.handleSubmitDelModal}
                 />
-                {renderContent()}
-            </Scrollbars>
-        </FolderList>
-    );
+            </Container>
+        );
+    }
 }
 

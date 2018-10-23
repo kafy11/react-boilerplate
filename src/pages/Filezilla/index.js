@@ -6,7 +6,7 @@ import { Loading, Button } from '../../components';
 import Page from '../../templates/Page';
 import FolderNavigator from './FolderNavigator';
 import FileEditor from './FileEditor';
-import { startListDir, startGetFile, setFileContent, startPublishFile } from '../../actions/filezilla';
+import { startListDir, startGetFile, setFileContent, startPublishFile, startPublishZip, startCreateDir, startDelete } from '../../actions/filezilla';
 import { startRefresh } from '../../actions/websocket';
 
 //cria um componente que define a cor do texto (usado para o icone)
@@ -42,6 +42,11 @@ class Filezilla extends Component {
     };
 
     handleNewFile = (path) => this.setState(() => ({ openedFile: path }));
+    handleNewFolder = (path) => {
+        this.props.startCreateDir(path);
+        this.setState(() => ({ currFolder: path }));
+        this.props.startListDir(path);
+    }
 
     handleSaveFile = (content) => {
         const { startPublishFile, startListDir } = this.props;
@@ -53,6 +58,28 @@ class Filezilla extends Component {
         });
         startListDir(currFolder);
         this.setState(() => ({ openedFile: undefined }));
+    }
+
+    handlePublishZip = (content) => {
+        const { startPublishZip, startListDir } = this.props;
+        const { currFolder } = this.state;
+
+        startPublishZip({
+            content,
+            path: currFolder
+        });
+        startListDir(currFolder);
+    }
+
+    handleDelete = ({ name, isFolder }) => {
+        const { startDelete, startListDir } = this.props;
+        const { currFolder } = this.state;
+
+        startDelete({ 
+            path: currFolder + '/' + name,
+            isFolder
+        });
+        startListDir(currFolder);
     }
 
     renderRefresh = () => (
@@ -88,6 +115,9 @@ class Filezilla extends Component {
                     onChangeFolder={this.handleChangeDir}
                     onOpenFile={this.handleOpenFile}
                     onNewFile={this.handleNewFile}
+                    onNewFolder={this.handleNewFolder}
+                    onPublishZip={this.handlePublishZip}
+                    onDelete={this.handleDelete}
                 />
             );
         }
@@ -117,7 +147,10 @@ const mapDispatchToProps = {
     startGetFile,
     setFileContent,
     startPublishFile,
-    startRefresh
+    startRefresh,
+    startPublishZip,
+    startCreateDir,
+    startDelete
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(Filezilla);

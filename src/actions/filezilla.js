@@ -90,3 +90,57 @@ export const startPublishFile = ({ file, content }) => {
         });
     }
 }
+
+
+//dispara a ação de publicar zip
+/* params:
+    path - caminho da extração
+    content - conteúdo do arquivo
+*/
+export const startPublishZip = ({ path, content }) => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: 'publishzip',
+            frontAction: 'publishZip',
+            to: id,
+            path,
+            content
+        });
+    }
+}
+
+//dispara a ação de criar pasta
+/* params:
+    path - caminho da pasta
+*/
+export const startCreateDir = (path) => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: 'createdir',
+            frontAction: 'createDir',
+            to: id,
+            path
+        });
+    }
+}
+
+//dispara a ação de deletar arquivo ou pasta
+/* params:
+    path - caminho da pasta
+*/
+export const startDelete = ({ path, isFolder }) => {
+    return (dispatch, getState) => {
+        const { conn, id } = getState().websocket;
+
+        conn.send({
+            action: isFolder ? 'removedir' : 'removefile',
+            frontAction: 'deleteFZ',
+            to: id,
+            path
+        });
+    }
+}

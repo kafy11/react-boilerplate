@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaFile, FaFolder } from 'react-icons/fa';
+import { FaFile, FaFolder, FaTrash } from 'react-icons/fa';
 
 const FolderItem = styled.li`
     padding: 0 ${({ theme }) => theme.spacing.xsmall}px;
@@ -21,7 +21,13 @@ const StyledFaFile = styled(FaFile)`
     color: ${({ theme }) => theme.palette.primary}
 `;
 
-export default ({ name, isFolder, onClick }) => (
+const StyledFaTrash = styled(FaTrash)`
+    color: ${({ theme }) => theme.palette.danger};
+    margin-left: ${({ theme }) => theme.spacing.xsmall}px;
+    font-size: ${({ theme }) => theme.sizes.xsmall};
+`;
+
+export default ({ name, isFolder, onClick, onDelete }) => (
     <FolderItem
         onClick={() => onClick({ name, isFolder })}
     >
@@ -30,5 +36,11 @@ export default ({ name, isFolder, onClick }) => (
         </Icon>
         
         {name}
+        {onDelete && (<StyledFaTrash 
+            onClick={(e) => {
+                e.stopPropagation();
+                onDelete({ name, isFolder });
+            }}
+        />)}
     </FolderItem>
 );

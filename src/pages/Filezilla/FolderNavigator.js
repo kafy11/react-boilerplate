@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus, FaUpload } from 'react-icons/fa';
 import FolderList from './FolderList';
 import NewFileModal from './NewFileModal';
-import Button from '../../components/Button';
+import PublishZipModal from './PublishZipModal';
+import { ButtonDropdown, DropdownItem } from '../../components';
 
 const Container = styled.div`
     padding: ${({ theme }) => theme.spacing.small}px;
@@ -48,13 +49,15 @@ export default class FolderNavigator extends Component {
 
     handleNewClick = () => this.setState(() => ({ showNewModal: true }));
     handleCloseNewModal = () => this.setState(() => ({ showNewModal: false }));
+    handlePublishZipClick = () => this.setState(() => ({ showPublishZipModal: true }));
+    handleClosePublishZipModal = () => this.setState(() => ({ showPublishZipModal: false }));
 
     handleNewSubmit = ({ name, isFolder }) => {
-        const { path, onNewFile } = this.props;
+        const { path, onNewFile, onNewFolder } = this.props;
         const fullPath = path + '/' + name;
 
         if(isFolder) {
-            alert('Ainda não é possível criar pastas');
+            onNewFolder(fullPath);
         } else {
             onNewFile(fullPath);
         }
@@ -72,7 +75,7 @@ export default class FolderNavigator extends Component {
     }
 
     render() {
-        const { content, onChangeFolder, onOpenFile } = this.props;
+        const { content, onChangeFolder, onOpenFile, onPublishZip, onDelete } = this.props;
 
         return (
             <Container>
@@ -82,12 +85,12 @@ export default class FolderNavigator extends Component {
                         onKeyDown={this.handleKeyPress} 
                         value={this.state.path}
                     />
-                    <Button 
+                    <ButtonDropdown 
                         type='primary'
-                        onClick={this.handleNewClick}
                     >
-                        <FaPlus />
-                    </Button>
+                        <DropdownItem onClick={this.handleNewClick}><FaPlus /> Criar</DropdownItem>
+                        <DropdownItem onClick={this.handlePublishZipClick}><FaUpload /> Publicar Zip</DropdownItem>
+                    </ButtonDropdown>
                 </Header>
 
                 <FolderList 
@@ -95,12 +98,19 @@ export default class FolderNavigator extends Component {
                     onOpen={this.handleOpen}
                     onChangeFolder={onChangeFolder}
                     onOpenFile={onOpenFile}
+                    onDelete={onDelete}
                 />
 
                 <NewFileModal 
                     show={this.state.showNewModal}
                     onClose={this.handleCloseNewModal}
                     onSubmit={this.handleNewSubmit}
+                />
+
+                <PublishZipModal 
+                    show={this.state.showPublishZipModal}
+                    onClose={this.handleClosePublishZipModal}
+                    onSubmit={onPublishZip}
                 />
             </Container>
         );
