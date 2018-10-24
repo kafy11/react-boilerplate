@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { FaPlus, FaUpload } from 'react-icons/fa';
+import { FaPlus, FaUpload, FaDownload } from 'react-icons/fa';
 import FolderList from './FolderList';
 import NewFileModal from './NewFileModal';
 import PublishZipModal from './PublishZipModal';

@@ -118,6 +118,7 @@ class Filezilla extends Component {
                     onNewFolder={this.handleNewFolder}
                     onPublishZip={this.handlePublishZip}
                     onDelete={this.handleDelete}
+                    onDownloadZip={this.handleDownloadZip}
                 />
             );
         }
