@@ -1,4 +1,8 @@
-//centraliza os exports dos reducers
-export { default as queryReducer } from './query';
-export { default as websocketReducer } from './websocket';
-export { default as filezillaReducer } from './filezilla';
+//gerencia os eventos para a global da query
+//NÃO PODE SOBRESCREVER OS PARÂMETROS
+export default (state = {}, action) => {
+    switch (action.type) {
+        default: 
+            return state;
+    }
+};

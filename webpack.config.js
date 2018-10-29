@@ -43,7 +43,7 @@ module.exports = (env) => {
                 template: 'template.html'
             }),
             new webpack.DefinePlugin({
-                BASENAME: (isProduction) ? "'/bpm/_remote_gateway'" : "'/'",
+                BASENAME: "'/'",
             }),
             new MiniCssExtractPlugin({
                 filename: "[name].css",
